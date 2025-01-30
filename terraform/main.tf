@@ -40,20 +40,18 @@ resource "aws_instance" "ec2_instance" {
   security_groups = [aws_security_group.ec2_sg.name]
 
   user_data = <<-EOF
-    #!/bin/bash
-    # Instalar Docker y Docker Compose
     sudo yum update -y
     sudo yum install -y docker
-    sudo systemctl start docker
     sudo systemctl enable docker
+    sudo systemctl start docker
+    sudo usermod -aG docker ec2-user
 
-    # Instalar Docker Compose
     sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
 
-    # Crear carpeta para la aplicación
-    mkdir -p /home/ec2-user/app
-    cd /home/ec2-user/app
+    sudo apt install unzip
+    sudo snap install docker
+    sudo apt install docker-compose
   EOF
 
   tags = {

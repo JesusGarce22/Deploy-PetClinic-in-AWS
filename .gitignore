@@ -2,3 +2,5 @@
 aws
 .terraform.lock.hcl
 variables.tf
+terraform.tfstate
+terraform.tfstate.backup
